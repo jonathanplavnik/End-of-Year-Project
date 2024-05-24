@@ -15,7 +15,19 @@ public class MyWorld extends World
      */
     public MyWorld()
     {    
-        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(600, 400, 1); 
+
+        //later make a for loop which makes each button and labels it to add modulatiry to code maybe ButtonMaker() 
+
+        prepare();
+    }
+    /**
+     * Prepare the world for the start of the program.
+     * That is: create the initial objects and add them to the world.
+     */
+    private void prepare()
+    {
+        Button button = new Button("slotPortal");
+        addObject(button,497,92);
     }
 }
