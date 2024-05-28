@@ -1,21 +1,19 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class BlackJack here.
+ * Write a description of class blackjack here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class BlackJack extends GameWorld
+public class blackjack extends Actor
 {
-
     /**
-     * Constructor for objects of class BlackJack.
-     * 
+     * Act - do whatever the blackjack wants to do. This method is called whenever
+     * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    public BlackJack()
-    {    
-        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(); 
+    public void act()
+    {
+        // Add your action code here.
     }
 }
