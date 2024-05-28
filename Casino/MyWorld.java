@@ -33,6 +33,7 @@ public class MyWorld extends World
         Button4 button4 = new Button4("bjPortal");
         addObject(button4,450,197);
     }
+    
     /**
      * Prepare the world for the start of the program.
      * That is: create the initial objects and add them to the world.

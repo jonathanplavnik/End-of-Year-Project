@@ -18,6 +18,6 @@ public class BlackJack extends MyWorld
      */
     public void act()
     {
-     
     }
+
 }
