@@ -8,14 +8,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Poker extends MyWorld
 {
-
-    /**
-     * Constructor for objects of class Poker.
-     * 
-     */
-    public Poker()
-    {    
-        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(); 
+    public Poker (){
+        removeButtons();
+    }
+    public void act(){
+        
     }
 }

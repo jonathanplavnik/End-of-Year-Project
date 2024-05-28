@@ -14,6 +14,10 @@ public class SlotMachine extends MyWorld
      */
     slotChars[] results = new slotChars[3];
     double prob;
+    
+    public SlotMachine (){
+        removeButtons();
+    }
     public void act()
     {
         for(int j = 0; j < 20; j++){
@@ -39,12 +43,16 @@ public class SlotMachine extends MyWorld
             displaySymbols();
         }
     }
+    
+    public void removeChars(){
+        removeObjects(getObjects(slotChars.class));
+    }
     public void displaySymbols(){
-        World World =(Slots)getWorld();
-        // World.removeChars();
-        World.addObject(results[0],199, 208);
-        World.addObject(results[1],295, 208); 
-        World.addObject(results[2],390, 208); 
+        removeChars();
+        addObject(results[0],199, 208);
+        addObject(results[1],295, 208); 
+        addObject(results[2],390, 208); 
         
     }
+    
 }
