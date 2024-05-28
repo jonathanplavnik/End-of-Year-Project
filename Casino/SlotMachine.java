@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class SlotMachine extends Actor
+public class SlotMachine extends MyWorld
 {
     /**
      * Act - do whatever the SlotMachine wants to do. This method is called whenever
@@ -40,7 +40,7 @@ public class SlotMachine extends Actor
         }
     }
     public void displaySymbols(){
-        World World =(Slots) getWorld(); 
+        World World =(Slots)getWorld();
         // World.removeChars();
         World.addObject(results[0],199, 208);
         World.addObject(results[1],295, 208); 

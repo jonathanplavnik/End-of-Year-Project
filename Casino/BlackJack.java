@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class blackjack extends Actor
+public class blackjack extends MyWorld
 {
     /**
      * Act - do whatever the blackjack wants to do. This method is called whenever
