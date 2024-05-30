@@ -14,12 +14,14 @@ public class SlotMachine extends MyWorld
      */
     slotChars[] results = new slotChars[3];
     double prob;
-    
+    boolean go = true;
+    int count = 0;
     public SlotMachine (){
         removeButtons();
     }
     public void act()
     {
+        if(go){
         for(int j = 0; j < 20; j++){
             
             for(int i = 0; i <=2; i++){
@@ -42,6 +44,11 @@ public class SlotMachine extends MyWorld
             }
             displaySymbols();
         }
+    }
+    count ++;
+    if(count > 25){
+        go = false;
+    }
     }
     
     public void removeChars(){
