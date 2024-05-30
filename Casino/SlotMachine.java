@@ -19,8 +19,27 @@ public class SlotMachine extends MyWorld
     public SlotMachine (){
         removeButtons();
     }
+    public void checkWin(){
+        if (results[0].getClass() == results[1].getClass() && results[2].getClass() == results[1].getClass()){
+            if(results[0] instanceof grand){
+                showText("Grand Prize!!!", 300, 100); 
+            }
+                  else if(results[0] instanceof lar){
+                showText("Large Prize!!", 300, 100); 
+            }
+                 else  if(results[0] instanceof med){
+                showText("Medium Prize!", 300, 100); 
+            }
+                 else if(results[0] instanceof small){
+                showText("Small Prize", 300, 100); 
+            } else {
+                showText("", 300, 100);
+            }
+        }
+    }
     public void act()
     {
+ showText("", 300, 100);
         if(go){
         for(int j = 0; j < 20; j++){
             
@@ -49,6 +68,12 @@ public class SlotMachine extends MyWorld
     if(count > 25){
         go = false;
     }
+    if(Greenfoot.isKeyDown("r")){
+        go = true;
+        count = 0;
+    }
+    if(go == false) checkWin();
+
     }
     
     public void removeChars(){
