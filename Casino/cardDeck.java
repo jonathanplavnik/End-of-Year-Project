@@ -15,7 +15,7 @@ public class cardDeck extends Actor
     
     private int[] values = new int[52];
     private String[] house = new String[52];
-    private card[] deck = new card[52];
+    private card[][] deck = new card[52][2];
     public void act()
     {
         // Add your action code here.
@@ -52,7 +52,8 @@ public class cardDeck extends Actor
         for (int i = 0; i < 52; i ++){
             appearance = values[i] + house[i];
             GreenfootImage face = new GreenfootImage(appearance);
-            deck[i] = new card (values[i],house[i], face); 
+            deck[i][0] = new card (values[i],house[i], face); 
+            deck[i][1] = new card (values[i],house[i], ); 
         }
         return deck;
     }
