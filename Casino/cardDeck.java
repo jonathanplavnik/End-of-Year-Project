@@ -46,15 +46,16 @@ public class cardDeck extends Actor
             house[i] = "club";
         }
     }
-    
+    /*
     public card[] createDeck(){
         String appearance;
         for (int i = 0; i < 52; i ++){
             appearance = values[i] + house[i];
             GreenfootImage face = new GreenfootImage(appearance);
             deck[i][0] = new card (values[i],house[i], face); 
-            deck[i][1] = new card (values[i],house[i], ); 
+            deck[i][1] = new card (values[i],house[i], back); 
         }
         return deck;
     }
+    */
 }
