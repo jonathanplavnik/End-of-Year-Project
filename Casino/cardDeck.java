@@ -13,47 +13,37 @@ public class cardDeck extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     
-    private int[] values = new int[52];
-    private String[] house = new String[52];
     private card[][] deck = new card[52][2];
+    private String[] house = new String[]{"hearts","diamonds", "clubs", "spades"};
+    
     public void act()
     {
         // Add your action code here.
     }
-    public void assignValsHouse(){
-        int val = 2;
-        for (int i = 0; i < 13; i ++){
-            values[i] = val;
-            val ++;
-            house[i] = "heart";
-        }
-        val = 2;
-        for (int i = 13; i < 26; i ++){
-            values[i] = val;
-            val ++;
-            house[i] = "spade";
-        }
-        val = 2;
-        for (int i = 26; i < 39; i ++){
-            values[i] = val;
-            val ++;
-            house[i] = "diamond";
-        }
-        val = 2;
-        for (int i = 39; i < 52; i ++){
-            values[i] = val;
-            val ++;
-            house[i] = "club";
-        }
-    }
-    
-    public card[] createDeck(){
+    public card[][] createDeck(){
         String appearance;
-        for (int i = 0; i < 52; i ++){
-            appearance = values[i] + house[i];
-            GreenfootImage face = new GreenfootImage(appearance);
-            deck[i][0] = new card (values[i],house[i], face); 
-            deck[i][1] = new card (values[i],house[i], ); 
+        GreenfootImage back = new GreenfootImage("backCard.png");
+        int index = 0;
+        for (int i = 0; i < 4; i ++){
+            for (int j = 2; j < 11; j ++){
+                appearance = j + "_of_" + house[i] + ".png";
+                GreenfootImage face = new GreenfootImage(appearance);
+                deck[index][0] = new card (j,house[i], face); 
+                deck[index][1] = new card (j,house[i], back); 
+                index ++;
+            }
+            deck[index][0] = new card (11,house[i], new GreenfootImage("jack_of" + house[i] + ".png"));
+            deck[index][1] = new card (11,house[i], back); 
+            index ++;
+            deck[index][0] = new card (12,house[i], new GreenfootImage("queen_of" + house[i] + ".png"));
+            deck[index][1] = new card (12,house[i], back); 
+            index ++;
+            deck[index][0] = new card (13,house[i], new GreenfootImage("king_of" + house[i] + ".png"));
+            deck[index][1] = new card (13,house[i], back); 
+            index ++;
+            deck[index][0] = new card (14,house[i], new GreenfootImage("ace_of" + house[i] + ".png"));
+            deck[index][1] = new card (14,house[i], back); 
+            index ++;
         }
         return deck;
     }
