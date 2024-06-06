@@ -20,6 +20,16 @@ public class card extends Actor
     public card(int value, String House, GreenfootImage image){
         this.value = value;
         this.image = image;
+        this.image = image;
+    }
+    public int getValue(){
+        return this.value;
+    }
+    public String getHouse(){
+        return this.house;
+    }
+    public GreenfootImage getImage(){
+        return this.image;
     }
     public void act()
     {
