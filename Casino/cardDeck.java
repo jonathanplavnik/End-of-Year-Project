@@ -20,6 +20,9 @@ public class cardDeck extends Actor
     {
         // Add your action code here.
     }
+    public cardDeck() {
+        this.deck = createDeck();
+    }
     public card[][] createDeck(){
         String appearance;
         GreenfootImage back = new GreenfootImage("backCard.png");
