@@ -14,8 +14,9 @@ public class SlotMachine extends MyWorld
      */
     slotChars[] results = new slotChars[3];
     double prob;
-    boolean go = true;
+    boolean go = false;
     int count = 0;
+    boolean started = false;
     public SlotMachine (){
         removeButtons();
     }
@@ -71,8 +72,9 @@ public class SlotMachine extends MyWorld
     if(Greenfoot.isKeyDown("r")){
         go = true;
         count = 0;
+        started = true;
     }
-    if(go == false) checkWin();
+    if(go == false && started) checkWin();
 
     }
     
