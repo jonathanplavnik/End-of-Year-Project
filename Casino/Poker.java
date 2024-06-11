@@ -1,5 +1,4 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import javax.swing.JOptionPane;
 
 /**
  * Write a description of class Poker here.
@@ -18,9 +17,8 @@ public class Poker extends MyWorld
         
     }
     public void displayQuestion() {
-        // Display the question using JOptionPane
-        String question = "How much do you bet?";
-        int amt = Integer.parseInt(JOptionPane.showInputDialog(null, question));
+        
+        int amt = Integer.parseInt(Greenfoot.ask("How much do you bet?"));
         
     }
     public void preflop(){
