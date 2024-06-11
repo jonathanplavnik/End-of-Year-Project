@@ -13,7 +13,7 @@ public class cardDeck extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     
-    private card[][] deck = new card[52][2];
+    public card[][] deck = new card[52][2];
     private String[] house = new String[]{"hearts","diamonds", "clubs", "spades"};
     
     public void act()
@@ -50,5 +50,5 @@ public class cardDeck extends Actor
         }
         return deck;
     }
-    */
+    
 }

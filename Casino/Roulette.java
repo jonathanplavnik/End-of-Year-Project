@@ -11,7 +11,7 @@ public class Roulette extends MyWorld
     public Roulette (){
         super();
         removeButtons();
-        setBackground(new GreenfootImage("Wheel.png"));
+        setBackground(new GreenfootImage("wheel.png"));
         
         setupGameComponents();
     }
