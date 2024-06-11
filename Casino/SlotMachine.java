@@ -14,7 +14,7 @@ public class SlotMachine extends MyWorld
      */
     slotChars[] results = new slotChars[3];
     double prob;
-    boolean go = true;
+    boolean go = false;
     int count = 0;
     boolean started = false;
     public SlotMachine (){
