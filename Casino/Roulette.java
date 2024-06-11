@@ -9,9 +9,14 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Roulette extends MyWorld
 {
     public Roulette (){
+        super();
         removeButtons();
-    }
-    public void act(){
+        setBackground(new GreenfootImage("Wheel.png"));
         
+        setupGameComponents();
+    }
+    public void setupGameComponents() {
+        StartButton startButton = new StartButton();
+        addObject(startButton, getWidth() / 2, getHeight() - 50);
     }
 }
