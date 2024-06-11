@@ -16,6 +16,7 @@ public class SlotMachine extends MyWorld
     double prob;
     boolean go = true;
     int count = 0;
+    boolean started = false;
     public SlotMachine (){
         removeButtons();
     }
@@ -71,8 +72,10 @@ public class SlotMachine extends MyWorld
     if(Greenfoot.isKeyDown("r")){
         go = true;
         count = 0;
+        started = true;
     }
     if(go == false) checkWin();
+    if(go == false && started) checkWin();
 
     }
     
