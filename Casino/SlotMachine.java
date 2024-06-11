@@ -74,7 +74,6 @@ public class SlotMachine extends MyWorld
         count = 0;
         started = true;
     }
-    if(go == false) checkWin();
     if(go == false && started) checkWin();
 
     }
