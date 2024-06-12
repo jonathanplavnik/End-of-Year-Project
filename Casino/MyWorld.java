@@ -13,6 +13,7 @@ public class MyWorld extends World
      * Constructor for objects of class MyWorld.
      * 
      */
+    
     public MyWorld()
     {    
         super(600, 400, 1); 
@@ -32,6 +33,7 @@ public class MyWorld extends World
         
         Button4 button4 = new Button4("bjPortal");
         addObject(button4,450,197);
+        
     }
     
     /**
