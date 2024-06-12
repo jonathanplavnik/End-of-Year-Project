@@ -16,11 +16,13 @@ public class card extends Actor
     private int value;
     private String house;
     private GreenfootImage image;
+    private GreenfootImage back;
     
-    public card(int value, String House, GreenfootImage image){
+    public card(int value, String House, GreenfootImage image, GreenfootImage back){
         this.value = value;
         this.image = image;
         this.image = image;
+        this.back = back;
     }
     public int getValue(){
         return this.value;
@@ -30,6 +32,9 @@ public class card extends Actor
     }
     public GreenfootImage getImage(){
         return this.image;
+    }
+    public GreenfootImage getBack(){
+        return this.back;
     }
     public void act()
     {
