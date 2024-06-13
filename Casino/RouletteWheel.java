@@ -9,19 +9,28 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class RouletteWheel extends Actor
 {
     private boolean isSpinning = false;
+    private int spinDuration = 0;
 
     public void act() {
         if (isSpinning) {
-            setRotation(getRotation() + 10);
+            if (spinDuration > 0) {
+                setRotation(getRotation() + 10);
+                spinDuration--;
+            } else {
+                stopSpinning();
+            }
         }
     }
 
     public void startSpinning() {
         isSpinning = true;
+        spinDuration = 50; 
     }
 
     public void stopSpinning() {
         isSpinning = false;
-        getWorldOfType(Roulette.class).prepareForNextRound();
+        int outcome = Greenfoot.getRandomNumber(36) + 1;  
+        ((Roulette) getWorld()).displayOutcome(outcome);
+        
     }
 }
