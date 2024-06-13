@@ -20,6 +20,6 @@ public class Roulette extends MyWorld
     }
     public void prepareForNextRound() {
         StartButton startButton = new StartButton();
-        addObject(startButton, getWidth() - 100, 50);
+        addObject(startButton, getWidth() - 550, 50);
     }
 }
