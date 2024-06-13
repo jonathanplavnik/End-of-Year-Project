@@ -22,13 +22,16 @@ public class Poker extends MyWorld
     private ArrayList<card> hand1 = new ArrayList<>();
     private ArrayList<card> hand2 = new ArrayList<>();
     private int coordinateX;
-    private turn tracker = new turn();
     private int next = 0;
+    private int pot = 0;
+    private boolean gameEnded = false;
     
     public Poker (){
         removeButtons();
+        
     }
     public void act(){
+        showText("Pot: " + pot, 75, 300);
         showText("Player 1: " + amt1, 75, 325);
         showText("Player 2: " + amt2, 75, 350);
         if (!flopped) {
@@ -37,11 +40,14 @@ public class Poker extends MyWorld
             flopBet = true;
         } else if (flopBet) {
             FlopBetting();
-            flopBet = false;
-            turnBet = true;
+            if(!gameEnded){
+                turn();
+                flopBet = false;
+                turnBet = true;
+            }
         } else if (turnBet) {
-            
             TurnBetting();
+            wash();
             turnBet = false;
             washed = true;
         } else if (washed) {
@@ -55,31 +61,43 @@ public class Poker extends MyWorld
     
     // flop, betting, turn, betting, wash, betting
        public void flop(){
-        addObject(tracker, 550, 50);
+        
+        
         //deal cards to players and flop
         
         //players
         coordinateX = 180;
+        int x1 = 0;
+        int x2 = 0;
         for (int i = 0; i < 2; i++){
             card card = deck[i];
             addObject(card, coordinateX, 330);
             card.setImage(card.getImage());
-            waitForNextClick(1);
-            addObject(new backCard(), coordinateX, 330);
+            Greenfoot.delay(4);
+            if(i == 0) x1 = coordinateX;
+            else x2 = coordinateX;
             coordinateX += 20;
             hand1.add(card);
         }
+        addObject(new backCard(), x1, 330);
+        addObject(new backCard(), x2, 330);
+        
+        Greenfoot.delay(15);
         
         coordinateX = 420;
         for (int i = 2; i < 4; i++){
             card card = deck[i];
             addObject(card, coordinateX, 330);
             card.setImage(card.getImage());
-            waitForNextClick(2);
-            addObject(new backCard(), coordinateX, 330);
+            Greenfoot.delay(4);
+            if(i == 2) x1 = coordinateX;
+            else x2 = coordinateX;
             coordinateX += 20;
             hand2.add(card);
         }
+        
+        addObject(new backCard(), x1, 330);
+        addObject(new backCard(), x2, 330);
         
         // flop (burn a card)
         
@@ -98,115 +116,250 @@ public class Poker extends MyWorld
         
     }
     public void FlopBetting(){
-        waitForNextClick(3);
-        String ans = Greenfoot.ask("This is a two player game! How much does Player 1 bet?");
-        if(ans.equals("fold")){
-            endGame("Player 2 Wins!");
-            flopped = false;
-            turned = false;
-            washed = false;
-            showText("Player 2 Wins!", 300, 200);
-        } else {
-            amt1 = Integer.parseInt(ans);
-        }
+    
+    Greenfoot.delay(20);
+    
         
-        ans = Greenfoot.ask("How much does Player 2 bet?");
-        if(ans.equals("fold")){
-            flopped = false;
-            turned = false;
-            washed = false;
-            showText("Player 1 Wins!", 300, 200);
+    int bet1 = 0; // amount bet by Player 1 in the current round
+    int bet2 = 0; // amount bet by Player 2 in the current round
+    boolean player1Turn = true;
+
+    while (true) {
+        String ans;
+        if (player1Turn) {
+            ans = Greenfoot.ask("Player 1: call " + bet2 + ", raise, or fold?");
         } else {
-            amt2 = Integer.parseInt(ans);
+            ans = Greenfoot.ask("Player 2: call " + bet1 + ", raise, or fold?");
+        }
+
+        try {
+            if (ans.equalsIgnoreCase("fold")) {
+                if (player1Turn) {
+                    endGame("Player 2 Wins!");
+                } else {
+                    endGame("Player 1 Wins!"); 
+                }
+                return; // end the betting round
+            } else if (ans.equalsIgnoreCase("call")) {
+                if (player1Turn) {
+                    amt1 += (bet2 - bet1);
+                    pot += (bet2 - bet1);
+                    bet1 = bet2;
+                } else {
+                    amt2 += (bet1 - bet2);
+                    pot += (bet1 - bet2);
+                    bet2 = bet1;
+                }
+            } else if (ans.toLowerCase().startsWith("raise")) {
+                String[] parts = ans.split(" ");
+                int raiseAmount = Integer.parseInt(parts[1]);
+                if (player1Turn) {
+                    amt1 += (bet2 - bet1) + raiseAmount;
+                    pot += (bet2 - bet1) + raiseAmount;
+                    bet1 = bet2 + raiseAmount;
+                } else {
+                    amt2 += (bet1 - bet2) + raiseAmount;
+                    pot += (bet1 - bet2) + raiseAmount;
+                    bet2 = bet1 + raiseAmount;
+                }
+            } else {
+                
+                continue; // prompt again without switching turn
+            }
+
+            if (bet1 == bet2) {
+                break; // exit the loop when both bets are equal
+            }
+
+            player1Turn = !player1Turn; // switch turn
+        } catch (NumberFormatException e) {
+            
         }
     }
+    
+    bet1 = 0;
+    bet2 = 0;
+    
+    }
     public void turn(){
-        waitForNextClick(4);
+        
+        Greenfoot.delay(10);
         card card = deck[9];
         coordinateX += 30;
         addObject(card, coordinateX, 130);
-        
+        hand1.add(card);
+        hand2.add(card);
     }
     public void TurnBetting(){
-        waitForNextClick(5);
-        String ans = Greenfoot.ask("How much does Player 1 bet?");
-        if(ans.equals("fold")){
-            flopped = false;
-            turned = false;
-            washed = false;
-            showText("Player 2 Wins!", 300, 200);
-        } else {
-            amt1 += Integer.parseInt(ans);
-        }
+    
+    Greenfoot.delay(20);
+    
         
-        ans = Greenfoot.ask("How much does Player 2 bet?");
-        if(ans.equals("fold")){
-            flopped = false;
-            turned = false;
-            washed = false;
-            showText("Player 1 Wins!", 300, 200);
+    int bet1 = 0; // amount bet by Player 1 in the current round
+    int bet2 = 0; // amount bet by Player 2 in the current round
+    boolean player1Turn = true;
+
+    while (true) {
+        String ans;
+        if (player1Turn) {
+            ans = Greenfoot.ask("Player 1: call " + bet2 + ", raise, or fold?");
         } else {
-            amt2 += Integer.parseInt(ans);
+            ans = Greenfoot.ask("Player 2: call " + bet1 + ", raise, or fold?");
+        }
+
+        try {
+            if (ans.equalsIgnoreCase("fold")) {
+                if (player1Turn) {
+                    endGame("Player 2 Wins!");
+                } else {
+                    endGame("Player 1 Wins!"); 
+                }
+                return; // end the betting round
+            } else if (ans.equalsIgnoreCase("call")) {
+                if (player1Turn) {
+                    amt1 += (bet2 - bet1);
+                    pot += (bet2 - bet1);
+                    bet1 = bet2;
+                } else {
+                    amt2 += (bet1 - bet2);
+                    pot += (bet1 - bet2);
+                    bet2 = bet1;
+                }
+            } else if (ans.toLowerCase().startsWith("raise")) {
+                String[] parts = ans.split(" ");
+                int raiseAmount = Integer.parseInt(parts[1]);
+                if (player1Turn) {
+                    amt1 += (bet2 - bet1) + raiseAmount;
+                    pot += (bet2 - bet1) + raiseAmount;
+                    bet1 = bet2 + raiseAmount;
+                } else {
+                    amt2 += (bet1 - bet2) + raiseAmount;
+                    pot += (bet1 - bet2) + raiseAmount;
+                    bet2 = bet1 + raiseAmount;
+                }
+            } else {
+                
+                continue; // prompt again without switching turn
+            }
+
+            if (bet1 == bet2) {
+                break; // exit the loop when both bets are equal
+            }
+
+            player1Turn = !player1Turn; // switch turn
+        } catch (NumberFormatException e) {
+            
         }
     }
+    bet1 = 0;
+    bet2 = 0;
+    }
     public void wash(){
-        waitForNextClick(6);
+        
+        Greenfoot.delay(10);
         card card = deck[11];
         coordinateX += 30;
         addObject(card, coordinateX, 130);
-        
+        hand1.add(card);
+        hand2.add(card);
     }
     public void WashBetting(){
-        waitForNextClick(7);
-        String ans = Greenfoot.ask("How much does Player 1 bet?");
-        if(ans.equals("fold")){
-            flopped = false;
-            turned = false;
-            washed = false;
-            showText("Player 2 Wins!", 300, 200);
-        } else {
-            amt1 += Integer.parseInt(ans);
-        }
+    
+    Greenfoot.delay(20);
+    
         
-        ans = Greenfoot.ask("How much does Player 2 bet?");
-        if(ans.equals("fold")){
-            flopped = false;
-            turned = false;
-            washed = false;
-            showText("Player 1 Wins!", 300, 200);
+    int bet1 = 0; // amount bet by Player 1 in the current round
+    int bet2 = 0; // amount bet by Player 2 in the current round
+    boolean player1Turn = true;
+
+    while (true) {
+        String ans;
+        if (player1Turn) {
+            ans = Greenfoot.ask("Player 1: call " + bet2 + ", raise, or fold?");
         } else {
-            amt2 += Integer.parseInt(ans);
+            ans = Greenfoot.ask("Player 2: call " + bet1 + ", raise, or fold?");
         }
-        
+
+        try {
+            if (ans.equalsIgnoreCase("fold")) {
+                if (player1Turn) {
+                    endGame("Player 2 Wins!");
+                } else {
+                    endGame("Player 1 Wins!"); 
+                }
+                return;
+                
+                //return; // end the betting round
+            } else if (ans.equalsIgnoreCase("call")) {
+                if (player1Turn) {
+                    amt1 += (bet2 - bet1);
+                    pot += (bet2 - bet1);
+                    bet1 = bet2;
+                } else {
+                    amt2 += (bet1 - bet2);
+                    pot += (bet1 - bet2);
+                    bet2 = bet1;
+                }
+            } else if (ans.toLowerCase().startsWith("raise")) {
+                String[] parts = ans.split(" ");
+                int raiseAmount = Integer.parseInt(parts[1]);
+                if (player1Turn) {
+                    amt1 += (bet2 - bet1) + raiseAmount;
+                    pot += (bet2 - bet1) + raiseAmount;
+                    bet1 = bet2 + raiseAmount;
+                } else {
+                    amt2 += (bet1 - bet2) + raiseAmount;
+                    pot += (bet1 - bet2) + raiseAmount;
+                    bet2 = bet1 + raiseAmount;
+                }
+            } else {
+                
+                continue; // prompt again without switching turn
+            }
+
+            if (bet1 == bet2) {
+                break; // exit the loop when both bets are equal
+            }
+
+            player1Turn = !player1Turn; // switch turn
+        } catch (NumberFormatException e) {
+            
+        }
+    }
+    bet1 = 0;
+    bet2 = 0;
     }
     public void result(){
-        waitForNextClick(8);
+        Greenfoot.delay(20);
         String result = determineWinner(hand1, hand2);
         showText(result, 300, 200);
         
-        removeObjects(getObjects(card.class));
+        removeObjects(getObjects(backCard.class));
     }
     public void endGame(String str){
-        flopped = false;
-        turned = false;
+        flopBet = false;
+        flopped = true;
+        turnBet = false;
+        washBet = false;
         washed = false;
+        turned = false;
+        gameEnded = true;
         showText(str, 300, 200);
+        removeObjects(getObjects(backCard.class));
     }
-    private void waitForNextClick(int targetNext) {
-        while (next != targetNext) {
-            next = tracker.getNext();
-            Greenfoot.delay(100); // Add a small delay to avoid busy waiting
-        }
-    }
+    
     
     
     
     
     // evaluate winner
     public static int evaluateHand(List<card> hand) {
-        Collections.sort(hand, (a, b) -> a.getValue() - b.getValue());
+        if (hand.size() != 7) {
+            throw new IllegalArgumentException("Hand must contain exactly 7 cards.");
+        }
         
-        boolean isFlush = hand.stream().allMatch(card -> card.getHouse().equals(hand.get(0).getHouse()));
+        Collections.sort(hand, Comparator.comparingInt(card::getValue));
+        boolean isFlush = isFlush(hand);
         boolean isStraight = isStraight(hand);
         
         if (isFlush && isStraight && hand.get(4).getValue() == 14) {
@@ -237,6 +390,13 @@ public class Poker extends MyWorld
             return 1; // One Pair
         }
         return 0; // High Card
+    }
+    private static boolean isFlush(List<card> hand) {
+        Map<String, Integer> suitCount = new HashMap<>();
+        for (card card : hand) {
+            suitCount.put(card.getHouse(), suitCount.getOrDefault(card.getHouse(), 0) + 1);
+        }
+        return suitCount.values().stream().anyMatch(count -> count >= 5);
     }
 
     private static boolean isStraight(List<card> hand) {
