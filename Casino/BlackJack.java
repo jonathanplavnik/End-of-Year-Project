@@ -35,7 +35,7 @@ public class BlackJack extends MyWorld
         pile.deck.remove(2);
         pile.deck.remove(3);
         
-        player.get(1)
+        player.get(1);
         player.clear();
         dealer.clear();
         
