@@ -10,49 +10,88 @@ import java.util.*;
 public class Poker extends MyWorld
 {
     // two player game
-    private boolean questionAsked = true;
     private boolean flopBet = true;
-    private boolean turnBet = true;
-    private boolean washBet = true;
-    private cardDeck deck;
+    private boolean flopped = false;
+    private boolean turnBet = false;
+    private boolean turned = false;
+    private boolean washBet = false;
+    private boolean washed = false;
+    private card[] deck = new cardDeck().deck;
     private int amt1;
     private int amt2;
     private ArrayList<card> hand1 = new ArrayList<>();
     private ArrayList<card> hand2 = new ArrayList<>();
+    private int coordinateX;
     
     public Poker (){
         removeButtons();
         flop();
-        turn();
-        wash();
-        result();
+        if(flopped) turn();
+        if(turned) wash();
+        if(washed) result();
         
     }
     public void act(){
+        showText("Player 1: " + amt1, 75, 325);
+        showText("Player 2: " + amt2, 75, 350);
         if(flopBet){
             FlopBetting();
             flopBet = false;
+            turned = true;
         }
         if(turnBet){
             TurnBetting();
             turnBet = false;
+            turned = true;
         }
         if(washBet){
              washBetting();
-             washBet = false;
+             washed = true;
         }
         
         
         
     }
     
-    // Pre flop + deal, flop, betting, turn, betting, wash, betting
+    // flop, betting, turn, betting, wash, betting
        public void flop(){
-        deck = new cardDeck();
-        card[] deckUsed = deck.deck;
         
         //deal cards to players and flop
         
+        //players
+        coordinateX = 180;
+        for (int i = 0; i < 2; i++){
+            card card = deck[i];
+            addObject(card, coordinateX, 330);
+            card.setImage(card.getImage());
+            Greenfoot.delay(5);
+            //addObject(cardBack, coordinateX, 330);
+            coordinateX += 20;
+            hand1.add(card);
+        }
+        Greenfoot.delay(10);
+        coordinateX = 420;
+        for (int i = 2; i < 4; i++){
+            card card = deck[i];
+            addObject(card, coordinateX, 330);
+            card.setImage(card.getImage());
+            //addObject(cardBack, coordinateX, 330);
+            coordinateX += 20;
+            hand2.add(card);
+        }
+        
+        // flop (burn a card)
+        
+        coordinateX = 210;
+        for(int i = 5; i < 8; i++){
+            card card = deck[i];
+            addObject(card, coordinateX, 130);
+            card.setImage(card.getImage());
+            coordinateX += 30;
+            hand1.add(card);
+            hand2.add(card);
+            
+        }
         
         
         
@@ -62,14 +101,20 @@ public class Poker extends MyWorld
         amt2 = Integer.parseInt(Greenfoot.ask("How much does Player 2 bet?"));
     }
     public void turn(){
-        
+        card card = deck[9];
+        coordinateX += 30;
+        addObject(card, coordinateX, 130);
+        Greenfoot.delay(10);
     }
     public void TurnBetting(){
         amt1 += Integer.parseInt(Greenfoot.ask("How much does Player 1 bet?"));
         amt2 += Integer.parseInt(Greenfoot.ask("How much does Player 2 bet?"));
     }
     public void wash(){
-        
+        card card = deck[11];
+        coordinateX += 30;
+        addObject(card, coordinateX, 130);
+        Greenfoot.delay(10);
     }
     public void washBetting(){
         amt1 += Integer.parseInt(Greenfoot.ask("How much does Player 1 bet?"));

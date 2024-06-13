@@ -47,7 +47,7 @@ public class BlackJack extends MyWorld
         int coordinateX = 270;
         for (int i = 0; i < player.size(); i ++){
             card card = player.get(i);
-            addObject(card, coordinateX, 330);
+            addObject(card,  coordinateX, 330);
             card.setImage(card.getImage());
             coordinateX += 20;
         }
