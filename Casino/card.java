@@ -27,6 +27,9 @@ public class card extends Actor
     public int getValue(){
         return this.value;
     }
+    public void setValue(int val){
+        this.value = val;
+    }
     public String getHouse(){
         return this.house;
     }

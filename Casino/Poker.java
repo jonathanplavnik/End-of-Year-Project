@@ -40,7 +40,7 @@ public class Poker extends MyWorld
     }
     public void preflop(){
         cardDeck deck = new cardDeck();
-        card a = deck.deck[0][0];
+        card a = deck.deck[0];
         System.out.println(a.getImage());
     }
     

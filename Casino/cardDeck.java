@@ -22,6 +22,7 @@ public class cardDeck extends Actor
     }
     public cardDeck() {
         this.deck = createDeck();
+        shuffle(this.deck);
     }
     public card[] createDeck(){
         String appearance;
@@ -31,19 +32,38 @@ public class cardDeck extends Actor
             for (int j = 2; j < 11; j ++){
                 appearance = j + "_of_" + house[i] + ".png";
                 GreenfootImage face = new GreenfootImage(appearance);
+                face.scale(face.getWidth()/6, face.getHeight()/6);
                 deck[index] = new card (j,house[i], face, back); 
                 index ++;
             }
-            deck[index]= new card (11,house[i], new GreenfootImage("jack_of" + house[i] + ".png"), back);
+            GreenfootImage face = new GreenfootImage("jack_of_" + house[i] + ".png");
+            face.scale(face.getWidth()/6, face.getHeight()/6);
+            deck[index]= new card (11,house[i], face, back);
             index ++;
-            deck[index] = new card (12,house[i], new GreenfootImage("queen_of" + house[i] + ".png"), back);
+            
+            face = new GreenfootImage("queen_of_" + house[i] + ".png");
+            face.scale(face.getWidth()/6, face.getHeight()/6);
+            deck[index]= new card (12,house[i], face, back);
             index ++;
-            deck[index] = new card (13,house[i], new GreenfootImage("king_of" + house[i] + ".png"), back);
+            
+            face = new GreenfootImage("king_of_" + house[i] + ".png");
+            face.scale(face.getWidth()/6, face.getHeight()/6);
+            deck[index]= new card (13,house[i], face, back);
             index ++;
-            deck[index]= new card (14,house[i], new GreenfootImage("ace_of" + house[i] + ".png"), back);
+            
+            face = new GreenfootImage("ace_of_" + house[i] + ".png");
+            face.scale(face.getWidth()/6, face.getHeight()/6);
+            deck[index]= new card (14,house[i], face, back);
             index ++;
         }
         return deck;
     }
-    
+    public void shuffle(card[] a) {
+        for(int i = 0; i < a.length-1; i++){
+            int j = (int)(Math.random() * (a.length-i) + i);
+            card temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
+        }
+    }
 }
