@@ -26,24 +26,34 @@ public class cardDeck extends Actor
     public card[] createDeck(){
         String appearance;
         GreenfootImage back = new GreenfootImage("backCard.png");
+        back.scale(back.getWidth()/6, back.getHeight()/6);
         int index = 0;
         for (int i = 0; i < 4; i ++){
             for (int j = 2; j < 11; j ++){
                 appearance = j + "_of_" + house[i] + ".png";
                 GreenfootImage face = new GreenfootImage(appearance);
+                face.scale(face.getWidth()/6, face.getHeight()/6);
                 deck[index] = new card (j,house[i], face, back); 
                 index ++;
             }
-            deck[index] = new card (11,house[i], new GreenfootImage("jack_of_" + house[i] + ".png"),back);
+            GreenfootImage face = new GreenfootImage("jack_of_" + house[i] + ".png");
+            face.scale(face.getWidth()/6, face.getHeight()/6);
+            deck[index] = new card (11,house[i],face,back);
             index ++;
             
-            deck[index] = new card (12,house[i], new GreenfootImage("jack_of_" + house[i] + ".png"),back);
+            face = new GreenfootImage("queen_of_" + house[i] + ".png");
+            face.scale(face.getWidth()/6, face.getHeight()/6);
+            deck[index] = new card (12,house[i],face,back);
             index ++;
             
-            deck[index] = new card (13,house[i], new GreenfootImage("jack_of_" + house[i] + ".png"),back);
+            face = new GreenfootImage("king_of_" + house[i] + ".png");
+            face.scale(face.getWidth()/6, face.getHeight()/6);
+            deck[index] = new card (13,house[i],face,back);
             index ++;
             
-            deck[index] = new card (14,house[i], new GreenfootImage("jack_of_" + house[i] + ".png"),back);
+            face = new GreenfootImage("ace_of_" + house[i] + ".png");
+            face.scale(face.getWidth()/6, face.getHeight()/6);
+            deck[index] = new card (14,house[i],face,back);
             index ++;
         }
         return deck;
