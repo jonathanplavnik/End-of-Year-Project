@@ -22,6 +22,15 @@ public class cardDeck extends Actor
     }
     public cardDeck() {
         this.deck = createDeck();
+        shuffle(this.deck);
+    }
+    public static void shuffle(card[] a) {
+        for(int i = 0; i < a.length-1; i++){
+            int j = (int)(Math.random() * (a.length-i) + i);
+            card temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
+        }
     }
     public card[] createDeck(){
         String appearance;

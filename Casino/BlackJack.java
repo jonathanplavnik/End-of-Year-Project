@@ -60,12 +60,9 @@ public class BlackJack extends MyWorld
         }  
         }
     public void act(){        
-        if (isPlayerTurn && Greenfoot.isKeyDown("h")){
+         if(isPlayerTurn && Greenfoot.isKeyDown("h")){
             hits += 1;
             card top = pile.deck[dealer.size() + player.size()];
-            if (top.getValue() > 10){
-                top.setValue(10);
-            }
             if (top.getValue() == 14){
                 if(playerSum + 11 > 21){
                     top.setValue(1);
@@ -73,6 +70,9 @@ public class BlackJack extends MyWorld
                 else{
                     top.setValue(11);
                 }
+            }
+            else if (top.getValue() > 10){
+                top.setValue(10);
             }
             playerSum += top.getValue();
             player.add(top);
@@ -108,11 +108,11 @@ public class BlackJack extends MyWorld
                     topDealer.setValue(10);
                 }
                 dealerSum += topDealer.getValue();
+                showCards();
                 dealer.add(topDealer);
                 hits += 1;
-                showCards();
             }
-            if (dealerSum > 21 || playerSum > dealerSum || playerSum == 21){
+             if (dealerSum > 21){
                 showText("You win", 300,200);
             }
             else{
@@ -130,7 +130,41 @@ public class BlackJack extends MyWorld
                Greenfoot.delay(2);
                showText("", 300,200);
             }
-            isPlayerTurn = true;
         }
+        else{
+            if (playerSum > 21){
+                showText("You lose", 300,200);
+                if (pile.deck.length >= 8 + hits){
+                   playerSum = 0;
+                   dealerSum = 0;
+                   Greenfoot.delay(3);
+                   reset(hits);
+                   removeObjects(getObjects(card.class));
+                   fill();
+                   showCards();
+                   hits = 0;
+                   Greenfoot.delay(2);
+                   showText("", 300,200);
+                   isPlayerTurn = true;
+                }
+            }
+            else if (dealerSum > 21){
+                showText("You win", 300,200);
+                if (pile.deck.length >= 8 + hits){
+                   playerSum = 0;
+                   dealerSum = 0;
+                   Greenfoot.delay(3);
+                   reset(hits);
+                   removeObjects(getObjects(card.class));
+                   fill();
+                   showCards();
+                   hits = 0;
+                   Greenfoot.delay(2);
+                   showText("", 300,200);
+                   isPlayerTurn = true;
+                }
+            }
+            
+            }
         }
         }
