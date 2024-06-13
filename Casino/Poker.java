@@ -45,8 +45,9 @@ public class Poker extends MyWorld
         
         
     }
-    // flop, betting, turn, betting, wash, betting --> skip preflop
-    public void flop(){
+    
+    // Pre flop + deal, flop, betting, turn, betting, wash, betting
+       public void flop(){
         deck = new cardDeck();
         card[] deckUsed = deck.deck;
         

@@ -17,7 +17,6 @@ public class MyWorld extends World
     public MyWorld()
     {    
         super(600, 400, 1); 
-
         //later make a for loop which makes each button and labels it to add modulatiry to code maybe ButtonMaker() 
         Button button = new Button("homePortal");
         addObject(button,568,364);
