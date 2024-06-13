@@ -1,13 +1,13 @@
 #Greenfoot project file
 class.BlackJack.image=blackJackBoard.jpeg
 class.Button.image=button-blue.png
-class.Button1.image=yellow-draught.png
-class.Button2.image=blue-draught.png
-class.Button3.image=red-draught.png
-class.Button4.image=blue-draught-king.png
+class.Button1.image=Artboard\ 1.png
+class.Button2.image=Artboard\ 4.png
+class.Button3.image=Artboard\ 2.png
+class.Button4.image=Artboard\ 3.png
 class.Hit.image=gold-ball.png
 class.MyWorld.image=casinoBackgroundResized.jpg
-class.Poker.image=rivets.jpg
+class.Poker.image=blackjackBoard.jpg
 class.Roulette.image=sand.jpg
 class.SlotMachine.image=slotMachine_IMG03.png
 class.backCard.image=backCard.png
