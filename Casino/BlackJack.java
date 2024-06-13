@@ -111,7 +111,6 @@ public class BlackJack extends MyWorld
                 dealer.add(topDealer);
                 hits += 1;
                 showCards();
-                
             }
             if (dealerSum > 21 || playerSum > dealerSum || playerSum == 21){
                 showText("You win", 300,200);
