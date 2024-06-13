@@ -10,7 +10,7 @@ import java.util.*;
 public class Poker extends MyWorld
 {
     // two player game
-    private boolean flopBet = true;
+    private boolean flopBet = false;
     private boolean flopped = false;
     private boolean turnBet = false;
     private boolean turned = false;
@@ -22,40 +22,40 @@ public class Poker extends MyWorld
     private ArrayList<card> hand1 = new ArrayList<>();
     private ArrayList<card> hand2 = new ArrayList<>();
     private int coordinateX;
+    private turn tracker = new turn();
+    private int next = 0;
     
     public Poker (){
         removeButtons();
-        flop();
-        if(flopped) turn();
-        if(turned) wash();
-        if(washed) result();
-        
     }
     public void act(){
         showText("Player 1: " + amt1, 75, 325);
         showText("Player 2: " + amt2, 75, 350);
-        if(flopBet){
+        if (!flopped) {
+            flop();
+            flopped = true;
+            flopBet = true;
+        } else if (flopBet) {
             FlopBetting();
             flopBet = false;
-            turned = true;
-        }
-        if(turnBet){
+            turnBet = true;
+        } else if (turnBet) {
+            
             TurnBetting();
             turnBet = false;
-            turned = true;
+            washed = true;
+        } else if (washed) {
+            WashBetting();
+            washed = false;
+            result();
         }
-        if(washBet){
-             washBetting();
-             washed = true;
-        }
-        
         
         
     }
     
     // flop, betting, turn, betting, wash, betting
        public void flop(){
-        
+        addObject(tracker, 550, 50);
         //deal cards to players and flop
         
         //players
@@ -64,18 +64,19 @@ public class Poker extends MyWorld
             card card = deck[i];
             addObject(card, coordinateX, 330);
             card.setImage(card.getImage());
-            Greenfoot.delay(5);
-            //addObject(cardBack, coordinateX, 330);
+            waitForNextClick(1);
+            addObject(new backCard(), coordinateX, 330);
             coordinateX += 20;
             hand1.add(card);
         }
-        Greenfoot.delay(10);
+        
         coordinateX = 420;
         for (int i = 2; i < 4; i++){
             card card = deck[i];
             addObject(card, coordinateX, 330);
             card.setImage(card.getImage());
-            //addObject(cardBack, coordinateX, 330);
+            waitForNextClick(2);
+            addObject(new backCard(), coordinateX, 330);
             coordinateX += 20;
             hand2.add(card);
         }
@@ -97,47 +98,111 @@ public class Poker extends MyWorld
         
     }
     public void FlopBetting(){
-        amt1 = Integer.parseInt(Greenfoot.ask("This is a two player game! How much does Player 1 bet?"));
-        amt2 = Integer.parseInt(Greenfoot.ask("How much does Player 2 bet?"));
+        waitForNextClick(3);
+        String ans = Greenfoot.ask("This is a two player game! How much does Player 1 bet?");
+        if(ans.equals("fold")){
+            endGame("Player 2 Wins!");
+            flopped = false;
+            turned = false;
+            washed = false;
+            showText("Player 2 Wins!", 300, 200);
+        } else {
+            amt1 = Integer.parseInt(ans);
+        }
+        
+        ans = Greenfoot.ask("How much does Player 2 bet?");
+        if(ans.equals("fold")){
+            flopped = false;
+            turned = false;
+            washed = false;
+            showText("Player 1 Wins!", 300, 200);
+        } else {
+            amt2 = Integer.parseInt(ans);
+        }
     }
     public void turn(){
+        waitForNextClick(4);
         card card = deck[9];
         coordinateX += 30;
         addObject(card, coordinateX, 130);
-        Greenfoot.delay(10);
+        
     }
     public void TurnBetting(){
-        amt1 += Integer.parseInt(Greenfoot.ask("How much does Player 1 bet?"));
-        amt2 += Integer.parseInt(Greenfoot.ask("How much does Player 2 bet?"));
+        waitForNextClick(5);
+        String ans = Greenfoot.ask("How much does Player 1 bet?");
+        if(ans.equals("fold")){
+            flopped = false;
+            turned = false;
+            washed = false;
+            showText("Player 2 Wins!", 300, 200);
+        } else {
+            amt1 += Integer.parseInt(ans);
+        }
+        
+        ans = Greenfoot.ask("How much does Player 2 bet?");
+        if(ans.equals("fold")){
+            flopped = false;
+            turned = false;
+            washed = false;
+            showText("Player 1 Wins!", 300, 200);
+        } else {
+            amt2 += Integer.parseInt(ans);
+        }
     }
     public void wash(){
+        waitForNextClick(6);
         card card = deck[11];
         coordinateX += 30;
         addObject(card, coordinateX, 130);
-        Greenfoot.delay(10);
+        
     }
-    public void washBetting(){
-        amt1 += Integer.parseInt(Greenfoot.ask("How much does Player 1 bet?"));
-        amt2 += Integer.parseInt(Greenfoot.ask("How much does Player 2 bet?"));
+    public void WashBetting(){
+        waitForNextClick(7);
+        String ans = Greenfoot.ask("How much does Player 1 bet?");
+        if(ans.equals("fold")){
+            flopped = false;
+            turned = false;
+            washed = false;
+            showText("Player 2 Wins!", 300, 200);
+        } else {
+            amt1 += Integer.parseInt(ans);
+        }
+        
+        ans = Greenfoot.ask("How much does Player 2 bet?");
+        if(ans.equals("fold")){
+            flopped = false;
+            turned = false;
+            washed = false;
+            showText("Player 1 Wins!", 300, 200);
+        } else {
+            amt2 += Integer.parseInt(ans);
+        }
         
     }
     public void result(){
-        
-        
+        waitForNextClick(8);
         String result = determineWinner(hand1, hand2);
         showText(result, 300, 200);
+        
         removeObjects(getObjects(card.class));
     }
-    
+    public void endGame(String str){
+        flopped = false;
+        turned = false;
+        washed = false;
+        showText(str, 300, 200);
+    }
+    private void waitForNextClick(int targetNext) {
+        while (next != targetNext) {
+            next = tracker.getNext();
+            Greenfoot.delay(100); // Add a small delay to avoid busy waiting
+        }
+    }
     
     
     
     
     // evaluate winner
-    
-    
-    
-    
     public static int evaluateHand(List<card> hand) {
         Collections.sort(hand, (a, b) -> a.getValue() - b.getValue());
         
